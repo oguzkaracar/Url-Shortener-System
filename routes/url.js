@@ -8,8 +8,12 @@ const Url = require("../models/URL");
 // route POST /api/url/shorten
 // desc  Create short URL
 
-router.post("/shorten", async (req, res) => {
-    const { longUrl } = req.body;
+router.get("/", (req, res) => {
+	res.render("index", { url: "" });
+});
+
+router.post("/", async (req, res) => {
+	const longUrl = req.body.longUrl;
 	const baseUrl = config.get("baseUrl");
 	if (!validUrl.isUri(baseUrl)) {
 		// valid-url modülünü kullanarak base url kontrolü yaptık.
@@ -25,10 +29,11 @@ router.post("/shorten", async (req, res) => {
 	if (validUrl.isUri(longUrl)) {
 		// girilen url gerçek mi? valid mi ? kontrol ettik.
 		try {
-			let url =  await Url.findOne({ longUrl });
+			let url = await Url.findOne({ longUrl });
 			if (url) {
 				// database'e aynı url i eklememek için...
-                res.json(url);
+
+				res.render("index", { url: url });
 			} else {
 				const shortUrl = baseUrl + "/" + urlCode; // short url oluşturuldu.. ==> http://localhost:3000/{bişeyler} şeklinde olucak.
 
@@ -43,11 +48,11 @@ router.post("/shorten", async (req, res) => {
 				// database e ekleme
 				await url.save();
 
-				res.json(url);
+				res.render("index", { url: url });
 			}
 		} catch (err) {
 			console.error(err);
-			res.status(500).json("Server Error noluyor ya");
+			res.status(500).json("Server Error");
 		}
 	} else {
 		// verilen longUrl valid değilse ;

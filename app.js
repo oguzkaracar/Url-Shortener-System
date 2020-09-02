@@ -9,13 +9,15 @@ const app = express();
 connectDB();
 
 // middlewares
-app.use(express.json({ extended: false }));
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/views");
+// app.use(express.json({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+// Routes
 
-
-// Routes 
-
-app.use('/', require('./routes/index'))
-app.use('/api/url', require('./routes/url'))
+app.use("/", require("./routes/index"));
+app.use("/api/url", require("./routes/url"));
 
 const PORT = 3000;
 app.listen(PORT, () => console.log("server çalıştı..."));
