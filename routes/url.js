@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const validUrl = require("valid-url");
 const shortId = require("shortid");
-const config = require("config");
+require("dotenv").config;
 
 const Url = require("../models/URL");
 // route POST /api/url/shorten
@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 
 router.post("/", async (req, res) => {
 	const longUrl = req.body.longUrl;
-	const baseUrl = config.get("baseUrl");
+	const baseUrl = process.env.BASE_URL
 	if (!validUrl.isUri(baseUrl)) {
 		// valid-url modülünü kullanarak base url kontrolü yaptık.
 		return res.status(400).json("Invalid base url"); // eğer geçerli bir base url değilse bunu dönecek...

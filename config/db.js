@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-const config = require('config')  // bu modül global değişken tanımlamamızı ve kullanmamızı sağlıyor
+require('dotenv').config();
 
-const db = config.get('mongoURI') // default.json dosyasından bu key'i getir.
+const db = process.env.DB_URL; 
 
 const connectDB = async () =>{
     try {
