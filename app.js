@@ -2,7 +2,7 @@
 // İlk önce API yazılacak daha sonra kullanıcı versiyonu oluşturulacak...
 const express = require("express");
 const connectDB = require("./config/db");
-
+require('dotenv').config()
 const app = express();
 
 // Database connection
@@ -19,5 +19,5 @@ app.use(express.static("public"));
 app.use("/", require("./routes/index"));
 app.use("/api/url", require("./routes/url"));
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("server çalıştı..."));
