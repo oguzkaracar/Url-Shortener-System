@@ -1,4 +1,3 @@
-config
-request.rest
+config/default.json
 node_modules
 README.md
