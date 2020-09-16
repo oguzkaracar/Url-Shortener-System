@@ -1,5 +1,5 @@
 {
-  "name": "Custom-URL-Shortener",
+  "name": "url-shortener",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
